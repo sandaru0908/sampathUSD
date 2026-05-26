@@ -2,7 +2,7 @@ name: USD Rate Job
 
 on:
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install playwright
-          playwright install
+          playwright install --with-deps
 
       - name: Run script
         run: python main.py
