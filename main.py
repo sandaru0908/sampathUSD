@@ -1,7 +1,10 @@
 from playwright.sync_api import sync_playwright
 import json
+import requests
 
 URL = "https://www.sampath.lk/api/exchange-rates"
+
+GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyNSUJgXxvXRmn9fbr641poBZGS6jr3u4HWd9SXf1QQLb2wmTfGaI0uOAgvZUvvSYk/exec"
 
 
 def get_usd_ttbuy():
@@ -24,5 +27,31 @@ def get_usd_ttbuy():
             if item["CurrCode"] == "USD":
                 return item["TTBUY"]
 
+    return None
 
-print(get_usd_ttbuy())
+
+def send_to_sheet(value):
+    try:
+        response = requests.get(
+            GOOGLE_SHEET_URL,
+            params={"value": value},
+            timeout=10
+        )
+        print("Sheet response:", response.text)
+    except Exception as e:
+        print("Error sending to sheet:", e)
+
+
+def main():
+    value = get_usd_ttbuy()
+
+    print("USD TTBUY:", value)
+
+    if value:
+        send_to_sheet(value)
+    else:
+        print("No value found")
+
+
+if __name__ == "__main__":
+    main()
