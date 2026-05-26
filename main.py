@@ -3,9 +3,6 @@ import json
 
 URL = "https://www.sampath.lk/api/exchange-rates"
 
-# Google Apps Script Web App URL
-GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyNSUJgXxvXRmn9fbr641poBZGS6jr3u4HWd9SXf1QQLb2wmTfGaI0uOAgvZUvvSYk/exec"
-
 
 def get_usd_ttbuy():
     with sync_playwright() as p:
@@ -16,8 +13,7 @@ def get_usd_ttbuy():
         )
 
         page = context.new_page()
-
-        response = page.goto(URL, wait_until="domcontentloaded")
+        response = page.goto(URL, wait_until="networkidle")
 
         text = response.text()
         browser.close()
@@ -28,29 +24,5 @@ def get_usd_ttbuy():
             if item["CurrCode"] == "USD":
                 return item["TTBUY"]
 
-    return None
 
-
-def send_to_sheet(value):
-    import requests
-
-    try:
-        response = requests.get(GOOGLE_SHEET_URL, params={"value": value}, timeout=10)
-        print("Sheet response:", response.text)
-    except Exception as e:
-        print("Error sending to sheet:", e)
-
-
-def main():
-    ttbuy = get_usd_ttbuy()
-
-    print("USD TTBUY:", ttbuy)
-
-    if ttbuy:
-        send_to_sheet(ttbuy)
-    else:
-        print("No value found")
-
-
-if __name__ == "__main__":
-    main()
+print(get_usd_ttbuy())
