@@ -4,7 +4,7 @@ import requests   # 👈 ONLY NEW ADDITION
 
 URL = "https://www.sampath.lk/api/exchange-rates"
 
-GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyNSUJgXxvXRmn9fbr641poBZGS6jr3u4HWd9SXf1QQLb2wmTfGaI0uOAgvZUvvSYk/exec"
+GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyrgEzmQ3MAwT5VWmX7BAlI2qaRR_CiIfnFTGfwBwqmtjyHmXaikgm-5bFve18zs18/exec"
 
 
 def get_usd_ttbuy():
