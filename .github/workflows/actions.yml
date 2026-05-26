@@ -1,4 +1,4 @@
-name: USD Rate Job
+name: USD Job
 
 on:
   schedule:
@@ -6,12 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-script:
+  run:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -20,8 +19,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install playwright
-          playwright install
+          pip install playwright requests
+          playwright install --with-deps
 
       - name: Run script
         run: python main.py
