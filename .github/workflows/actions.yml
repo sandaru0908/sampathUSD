@@ -1,4 +1,4 @@
-name: USD Job
+name: USD TTBUY Job
 
 on:
   schedule:
